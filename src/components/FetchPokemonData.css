@@ -1,18 +1,21 @@
-/*Schrijf hier jouw eigen CSS!*/
-
-.pokemon-container {
-    display:flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
 .pokemon-card {
     width: 200px;
-    margin: 10px;
-    padding: 10px;
+    margin: 10px auto;
+    padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
     text-align: center;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.pokemon-card:hover {
+    transform: scale(1.05);
 }
 
 .pokemon-card img {
@@ -21,23 +24,18 @@
     margin-bottom: 10px;
 }
 
-.pokemon-card h2 {
-    font-size: 18px;
-    font-family: "Proxima Nova";
-    margin-bottom: 5px;
-}
-
-.pokemon-card p {
+.pokemon-card h2, .pokemon-card p {
+    font-family: "Proxima Nova", sans-serif;
     margin: 5px 0;
-    font-family: "Proxima Nova";
 }
 
 .pokemon-card ul {
-    padding: 0;
-    maring: 0;
     list-style: none;
+    padding: 0;
+    width: 100%;
 }
 
-.pokemon-card ul li {
+.pokemon-card li {
     margin-bottom: 3px;
+    text-align: left;
 }
