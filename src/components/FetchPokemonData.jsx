@@ -1,48 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function FetchRandomPokemon() {
+const FetchPokemonData = ({ pokemonName }) => {
     const [pokemon, setPokemon] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchRandomPokemon = async () => {
-            try {
+        setIsLoading(true);
+        axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
+            .then(response => {
+                setPokemon(response.data);
+                setIsLoading(false);
+            })
+            .catch(error => {
+                setError('Error fetching Pokémon data');
+                setIsLoading(false);
+            });
+    }, [pokemonName]);
 
-                const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=1&offset=' + Math.floor(Math.random() * 1118));
-
-                const randomPokemon = response.data.results[0];
-
-                const pokemonDetailsResponse = await axios.get(randomPokemon.url);
-
-                setPokemon(pokemonDetailsResponse.data);
-            } catch (error) {
-                console.error('Error fetching random Pokémon:', error);
-            }
-        };
-
-
-        fetchRandomPokemon();
-    }, []);
-
-
-    if (!pokemon) return <p>Loading...</p>;
-
+    if (isLoading) return <p>Loading...</p>;
+    if (error) return <p>{error}</p>;
+    if (!pokemon) return null;
 
     return (
-        <div>
+        <div className="pokemon-card">
             <h2>{pokemon.name}</h2>
             <img src={pokemon.sprites.front_default} alt={pokemon.name} />
-            <p>Moves: {pokemon.moves.length}</p>
             <p>Weight: {pokemon.weight}</p>
-            <div>Abilities:
-                <ul>
-                    {pokemon.abilities.map((ability, index) => (
-                        <li key={index}>{ability.ability.name}</li>
-                    ))}
-                </ul>
-            </div>
+            {/* Add more details as needed */}
         </div>
     );
-}
+};
 
-export default FetchRandomPokemon
+export default FetchPokemonData;
